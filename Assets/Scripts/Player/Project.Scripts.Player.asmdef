@@ -1,0 +1,17 @@
+{
+    "name": "Project.Scripts.Player",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f41d1d313f6239946b4adc93860495c8",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
