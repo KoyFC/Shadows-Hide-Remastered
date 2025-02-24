@@ -56,6 +56,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerMovementScript: {fileID: 0}
   m_PlayerInputScript: {fileID: 0}
+  m_Lamp: {fileID: 4763317788461174334}
+  m_LampActive: 1
 --- !u!114 &8916283591069135367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +143,7 @@ MonoBehaviour:
   m_JumpPressed: 0
   m_JumpHeld: 0
   m_JumpReleased: 0
+  m_SummonPressed: 0
   m_ActionPressed: 0
   m_MouseWheel: 0
 --- !u!114 &5066594737278863163
@@ -249,6 +252,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 029dbdf9-364f-4f43-8106-b4dd3f4e1dd5
+    m_ActionName: 'Player/Summon[/Keyboard/e,/XInputControllerWindows/buttonWest]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -563,12 +570,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8122270806171731545, guid: 9c824043e8ea929468f9b7c49137b6fd, type: 3}
   m_PrefabInstance: {fileID: 7136511269206889460}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4763317788461174334 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2383336016923663818, guid: 9c824043e8ea929468f9b7c49137b6fd, type: 3}
+  m_PrefabInstance: {fileID: 7136511269206889460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &9072530249463265425 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2225307088758270821, guid: 9c824043e8ea929468f9b7c49137b6fd, type: 3}
   m_PrefabInstance: {fileID: 7136511269206889460}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4763317788461174334}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e1190ab4a0844847b0df9ebc96cc2d4, type: 3}

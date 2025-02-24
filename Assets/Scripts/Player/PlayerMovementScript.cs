@@ -32,9 +32,6 @@ public class PlayerMovementScript : MonoBehaviour
 
     [Header("Damage")]
     [SerializeField] private float m_KnockbackForce = 10f;
-
-    [Header("Lamp")]
-    public bool m_LampActive = true;
     #endregion
 
     #region Main Methods
@@ -84,7 +81,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         Vector3 currentAngle = m_Hinge.localRotation.eulerAngles;
 
-        if (m_LampActive)
+        if (m_PlayerController.m_LampActive)
         {
             LampInputScript lampInputScript = m_PlayerController.m_LampController.m_LampInputScript;
             Vector3 aimDirection = lampInputScript.m_AimInput;
@@ -93,7 +90,6 @@ public class PlayerMovementScript : MonoBehaviour
             {
                 aimDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             }
-            Debug.Log(aimDirection);
 
             if (aimDirection.x > 0 && !GoingRight) // Turn right
             {

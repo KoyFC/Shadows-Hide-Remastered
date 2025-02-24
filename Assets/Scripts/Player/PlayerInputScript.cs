@@ -16,6 +16,7 @@ public class PlayerInputScript : MonoBehaviour
     [HideInInspector] public bool m_JumpHeld = false;
     [HideInInspector] public bool m_JumpReleased = false;
 
+    [HideInInspector] public bool m_SummonPressed = false;
     [HideInInspector] public bool m_ActionPressed = false;
     
     [HideInInspector] public float m_MouseWheel = 0f;
@@ -52,6 +53,7 @@ public class PlayerInputScript : MonoBehaviour
         m_JumpHeld = m_PlayerInput.actions["Jump"].IsPressed();
         m_JumpReleased = m_PlayerInput.actions["Jump"].WasReleasedThisFrame();
 
+        m_SummonPressed = m_PlayerInput.actions["Summon"].WasPressedThisFrame();
         m_ActionPressed = m_PlayerInput.actions["Attack"].WasPressedThisFrame();
 
         m_MouseWheel = m_PlayerInput.actions["MouseWheel"].ReadValue<float>();

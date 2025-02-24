@@ -18,7 +18,7 @@ public class LampInputScript : MonoBehaviour
 
     void Update()
     {
-        m_AimInput = m_PlayerInput.actions["Look"].ReadValue<Vector2>();
+        m_AimInput = m_PlayerInput.actions["Aim"].ReadValue<Vector2>();
     }
 
     public void OnDeviceChange(PlayerInput playerInput)

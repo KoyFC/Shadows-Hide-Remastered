@@ -5,8 +5,8 @@ using UnityEngine;
 public class LampController : MonoBehaviour
 {
     internal PlayerController m_PlayerController;
-    private LampMovementScript m_LampMovementScript;
-    internal LampInputScript m_LampInputScript;
+    [HideInInspector] public LampMovementScript m_LampMovementScript;
+    [HideInInspector] public LampInputScript m_LampInputScript;
 
     void Awake()
     {
@@ -16,7 +16,6 @@ public class LampController : MonoBehaviour
     private void GetAllComponents()
     {
         m_PlayerController = GetComponentInParent<PlayerController>();
-        m_LampMovementScript = GetComponent<LampMovementScript>();
         m_LampInputScript = GetComponent<LampInputScript>();
     }
 }

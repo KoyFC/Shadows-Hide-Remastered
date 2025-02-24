@@ -7,7 +7,7 @@ public class LampMovementScript : MonoBehaviour
 
     private Transform m_Hinge = null;
 
-    private Vector3 m_LastDirection = Vector3.zero;
+    public Vector3 m_LastDirection = Vector3.zero;
     [SerializeField] private float m_RotationSpeed = 10.0f;
 
     private Vector3 m_OriginalScale = Vector3.one;
@@ -22,13 +22,23 @@ public class LampMovementScript : MonoBehaviour
         m_OriginalScale = transform.localScale;
     }
 
-    void LateUpdate()
+    void Update()
     {
         AimLantern();
     }
 
+    private void OnEnable()
+    {
+        if (m_LampController != null && m_LampController.m_LampInputScript != null)
+        {
+            m_LampController.m_LampInputScript.m_AimInput = m_LastDirection;
+        }
+    }
+
     private void AimLantern()
     {
+        if (!m_LampController.m_PlayerController.m_LampActive) return;
+
         m_GoingRight = m_LampController.m_PlayerController.m_PlayerMovementScript.GoingRight;
         Vector3 direction = m_LastDirection;
 
