@@ -11,7 +11,6 @@ public class PlayerMovementScript : MonoBehaviour
     private PlayerController m_PlayerController = null;
     private PlayerInputScript m_PlayerInputScript = null;
     private Rigidbody2D m_Rigidbody = null;
-    [SerializeField] Transform m_Hinge;
 
     [Header("Movement")]
     [SerializeField] private float m_MovementSpeed = 5f;
@@ -32,6 +31,9 @@ public class PlayerMovementScript : MonoBehaviour
 
     [Header("Damage")]
     [SerializeField] private float m_KnockbackForce = 10f;
+
+    [Header("References")]
+    [SerializeField] Transform m_Hinge;
     #endregion
 
     #region Main Methods

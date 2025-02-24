@@ -3,13 +3,16 @@ using UnityEngine.InputSystem;
 
 public class LampInputScript : MonoBehaviour
 {
+    #region Variables
     private LampController m_LampController;
     private PlayerInput m_PlayerInput;
 
     [HideInInspector] public Vector2 m_AimInput;
 
     public bool IsGamepad { get; private set; }
+    #endregion
 
+    #region Main Methods
     void Start()
     {
         m_LampController = GetComponent<LampController>();
@@ -25,4 +28,5 @@ public class LampInputScript : MonoBehaviour
     {
         IsGamepad = playerInput.currentControlScheme.Equals("Gamepad");
     }
+    #endregion
 }

@@ -3,16 +3,27 @@ using UnityEngine;
 
 public class LampMovementScript : MonoBehaviour
 {
-    private LampController m_LampController = null;
+    #region Variables
+    private bool m_GoingRight = true;
 
+    [Header("References")]
+    private LampController m_LampController = null;
     private Transform m_Hinge = null;
 
-    public Vector3 m_LastDirection = Vector3.zero;
+    [Header("Lamp Settings")]
     [SerializeField] private float m_RotationSpeed = 10.0f;
-
+    [HideInInspector] public Vector3 m_LastDirection = Vector3.zero;
     private Vector3 m_OriginalScale = Vector3.one;
+    #endregion
 
-    private bool m_GoingRight = true;
+    #region Main Methods
+    private void OnEnable()
+    {
+        if (m_LampController != null && m_LampController.m_LampInputScript != null)
+        {
+            m_LampController.m_LampInputScript.m_AimInput = m_LastDirection;
+        }
+    }
 
     void Start()
     {
@@ -24,22 +35,17 @@ public class LampMovementScript : MonoBehaviour
 
     void Update()
     {
-        AimLantern();
+        HandleLampAim();
     }
+    #endregion
 
-    private void OnEnable()
-    {
-        if (m_LampController != null && m_LampController.m_LampInputScript != null)
-        {
-            m_LampController.m_LampInputScript.m_AimInput = m_LastDirection;
-        }
-    }
-
-    private void AimLantern()
+    #region Handling Methods
+    private void HandleLampAim()
     {
         if (!m_LampController.m_PlayerController.m_LampActive) return;
 
         m_GoingRight = m_LampController.m_PlayerController.m_PlayerMovementScript.GoingRight;
+
         Vector3 direction = m_LastDirection;
 
         if (m_LampController.m_LampInputScript.IsGamepad)
@@ -51,6 +57,13 @@ public class LampMovementScript : MonoBehaviour
             RotateWithMouse(ref direction);
         }
 
+        UpdateLampRotation(direction);
+    }
+    #endregion
+
+    #region Helper Methods
+    private void UpdateLampRotation(Vector3 direction)
+    {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         // Adjust the angle while facing left
@@ -63,20 +76,14 @@ public class LampMovementScript : MonoBehaviour
 
         // Rotate the hinge
         float target = Mathf.MoveTowardsAngle(m_Hinge.localEulerAngles.z, angle, m_RotationSpeed * Time.deltaTime);
+
         // Normalize the angle to be within -180 to 180 degrees
         target = NormalizeAngle(target);
 
         Vector3 targetAngle = new Vector3(0, 0, target);
         m_Hinge.localRotation = Quaternion.Euler(targetAngle);
 
-        // Flip the lantern if needed
-        bool shouldFlipScale = (Mathf.Abs(target) > 90);
-
-        transform.localScale = new Vector3(
-            m_OriginalScale.x,
-            shouldFlipScale ? -m_OriginalScale.y : m_OriginalScale.y,
-            m_OriginalScale.z
-        );
+        CheckLanternFlip(target);
     }
 
     private float NormalizeAngle(float angle)
@@ -84,6 +91,17 @@ public class LampMovementScript : MonoBehaviour
         while (angle > 180) angle -= 360;
         while (angle < -180) angle += 360;
         return angle;
+    }
+
+    private void CheckLanternFlip(float target)
+    {
+        bool shouldFlipScale = Mathf.Abs(target) > 90;
+
+        transform.localScale = new Vector3(
+            m_OriginalScale.x,
+            shouldFlipScale ? -m_OriginalScale.y : m_OriginalScale.y,
+            m_OriginalScale.z
+        );
     }
 
     private void RotateWithGamepad(ref Vector3 direction)
@@ -105,7 +123,8 @@ public class LampMovementScript : MonoBehaviour
     {
         Vector3 aimPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         aimPosition.z = transform.position.z;
-        direction = (aimPosition - transform.position);
+        direction = aimPosition - transform.position;
         m_LastDirection = direction;
     }
+    #endregion
 }

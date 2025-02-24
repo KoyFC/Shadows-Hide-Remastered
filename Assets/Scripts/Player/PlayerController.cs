@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(GroundScript))]
 public class PlayerController : MonoBehaviour
 {
+    #region Variables
     [HideInInspector] public PlayerMovementScript m_PlayerMovementScript;
     [HideInInspector] public PlayerInputScript m_PlayerInputScript;
     internal LampController m_LampController;
@@ -13,20 +14,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject m_Lamp;
     public bool m_LampActive = true;
+    #endregion
 
+    #region Main Methods
     void Awake()
     {
         GetAllComponents();
 
         m_Lamp.SetActive(m_LampActive);
-    }
-
-    private void GetAllComponents()
-    {
-        m_PlayerMovementScript = GetComponent<PlayerMovementScript>();
-        m_PlayerInputScript = GetComponent<PlayerInputScript>();
-        m_LampController = GetComponentInChildren<LampController>();
-        m_GroundScript = GetComponent<GroundScript>();
     }
 
     private void Update()
@@ -37,4 +32,15 @@ public class PlayerController : MonoBehaviour
             m_Lamp.SetActive(m_LampActive);
         }
     }
+    #endregion
+
+    #region Helper Methods
+    private void GetAllComponents()
+    {
+        m_PlayerMovementScript = GetComponent<PlayerMovementScript>();
+        m_PlayerInputScript = GetComponent<PlayerInputScript>();
+        m_LampController = GetComponentInChildren<LampController>();
+        m_GroundScript = GetComponent<GroundScript>();
+    }
+    #endregion
 }

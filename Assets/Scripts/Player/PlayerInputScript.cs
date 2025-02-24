@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputScript : MonoBehaviour
 {
+    #region Variables
     public PlayerInput m_PlayerInput;
 
     [SerializeField][Min(0)] private Vector2 m_LeftStickDeadZone;
@@ -20,7 +21,9 @@ public class PlayerInputScript : MonoBehaviour
     [HideInInspector] public bool m_ActionPressed = false;
     
     [HideInInspector] public float m_MouseWheel = 0f;
+    #endregion
 
+    #region Main Methods
     void Awake()
     {
         m_PlayerInput = GetComponent<PlayerInput>();
@@ -58,4 +61,5 @@ public class PlayerInputScript : MonoBehaviour
 
         m_MouseWheel = m_PlayerInput.actions["MouseWheel"].ReadValue<float>();
     }
+    #endregion
 }
