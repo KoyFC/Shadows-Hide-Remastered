@@ -32,6 +32,9 @@ public class PlayerMovementScript : MonoBehaviour
 
     [Header("Damage")]
     [SerializeField] private float m_KnockbackForce = 10f;
+
+    [Header("Lamp")]
+    public bool m_LampActive = true;
     #endregion
 
     #region Main Methods
@@ -81,25 +84,40 @@ public class PlayerMovementScript : MonoBehaviour
     {
         Vector3 currentAngle = m_Hinge.localRotation.eulerAngles;
 
-        if (GoingRight && m_PlayerInputScript.m_Movement.x < 0) // Turn left
+        if (m_LampActive)
         {
-            GoingRight = false;
+            LampInputScript lampInputScript = m_PlayerController.m_LampController.m_LampInputScript;
+            Vector3 aimDirection = lampInputScript.m_AimInput;
 
-            transform.localRotation = Quaternion.Euler(0, 180, 0);
+            if (!lampInputScript.IsGamepad)
+            {
+                aimDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            }
+            Debug.Log(aimDirection);
 
-            // The lamp is a child of the player, so we need to rotate it in the opposite direction
-            m_Hinge.localRotation = Quaternion.Euler(currentAngle.x, currentAngle.y, -currentAngle.z + 180);
-
-            Vector3 lampRotation = m_Hinge.localRotation.eulerAngles;
+            if (aimDirection.x > 0 && !GoingRight) // Turn right
+            {
+                GoingRight = true;
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
+            }
+            else if (aimDirection.x < 0 && GoingRight) // Turn left
+            {
+                GoingRight = false;
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
+            }
         }
-        else if (!GoingRight && m_PlayerInputScript.m_Movement.x > 0) // Turn right
+        else
         {
-            GoingRight = true;
-
-            transform.localRotation = Quaternion.Euler(0, 0, 0);
-
-            // Same as before
-            m_Hinge.localRotation = Quaternion.Euler(currentAngle.x, currentAngle.y, -currentAngle.z + 180);
+            if (GoingRight && m_PlayerInputScript.m_Movement.x < 0) // Turn left
+            {
+                GoingRight = false;
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
+            }
+            else if (!GoingRight && m_PlayerInputScript.m_Movement.x > 0) // Turn right
+            {
+                GoingRight = true;
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
+            }
         }
     }
 
@@ -179,3 +197,4 @@ public class PlayerMovementScript : MonoBehaviour
     }
     #endregion
 }
+

@@ -59,10 +59,8 @@ public class LampMovementScript : MonoBehaviour
         Vector3 targetAngle = new Vector3(0, 0, target);
         m_Hinge.localRotation = Quaternion.Euler(targetAngle);
 
-        Debug.Log(target);
-
         // Flip the lantern if needed
-        bool shouldFlipScale = (Mathf.Abs(target) > 90) ;
+        bool shouldFlipScale = (Mathf.Abs(target) > 90);
 
         transform.localScale = new Vector3(
             m_OriginalScale.x,

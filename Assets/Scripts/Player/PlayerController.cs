@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public PlayerMovementScript m_PlayerMovementScript;
     public PlayerInputScript m_PlayerInputScript;
+    internal LampController m_LampController;
     internal GroundScript m_GroundScript;
 
     void Awake()
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     {
         m_PlayerMovementScript = GetComponent<PlayerMovementScript>();
         m_PlayerInputScript = GetComponent<PlayerInputScript>();
+        m_LampController = GetComponentInChildren<LampController>();
         m_GroundScript = GetComponent<GroundScript>();
     }
 }
