@@ -3,10 +3,12 @@ using UnityEngine;
 [RequireComponent(typeof(HealthScript))]
 [RequireComponent(typeof(PlayerMovementScript))]
 [RequireComponent(typeof(PlayerInputScript))]
+[RequireComponent(typeof(GroundScript))]
 public class PlayerController : MonoBehaviour
 {
-    private PlayerMovementScript m_PlayerMovementScript;
-    private PlayerInputScript m_PlayerInputScript;
+    public PlayerMovementScript m_PlayerMovementScript;
+    public PlayerInputScript m_PlayerInputScript;
+    internal GroundScript m_GroundScript;
 
     void Awake()
     {
@@ -17,5 +19,6 @@ public class PlayerController : MonoBehaviour
     {
         m_PlayerMovementScript = GetComponent<PlayerMovementScript>();
         m_PlayerInputScript = GetComponent<PlayerInputScript>();
+        m_GroundScript = GetComponent<GroundScript>();
     }
 }

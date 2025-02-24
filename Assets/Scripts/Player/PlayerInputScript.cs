@@ -4,9 +4,10 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputScript : MonoBehaviour
 {
-    private PlayerInput m_PlayerInput;
+    public PlayerInput m_PlayerInput;
 
-    [HideInInspector] public Vector2 m_Look = Vector2.zero;
+    [SerializeField][Min(0)] private Vector2 m_LeftStickDeadZone;
+    [SerializeField][Min(0)] private Vector2 m_RightStickDeadZone;
 
     [HideInInspector] public Vector2 m_Movement = Vector2.zero;
     [HideInInspector] public bool m_SprintPressed = false;
@@ -26,9 +27,25 @@ public class PlayerInputScript : MonoBehaviour
 
     void Update()
     {
-        m_Look = m_PlayerInput.actions["Look"].ReadValue<Vector2>();
+        m_Movement = m_PlayerInput.actions["Move"].ReadValue<Vector2>();
+        // Setting the deadzone / limits for the left stick
+        if (m_Movement.x > 0 && 
+            m_Movement.x > m_LeftStickDeadZone.x && // Minimum X value
+            m_Movement.y < m_LeftStickDeadZone.y) // Maximum Y value
+        {
+            m_Movement.x = 1;
+        }
+        else if (m_Movement.x < 0 && 
+            m_Movement.x < -m_LeftStickDeadZone.x && 
+            m_Movement.y > -m_LeftStickDeadZone.y)
+        {
+            m_Movement.x = -1;
+        }
+        else
+        {
+            m_Movement.x = 0;
+        }
 
-        m_PlayerInput.actions["Move"].ReadValue<Vector2>();
         m_SprintPressed = m_PlayerInput.actions["Sprint"].WasPressedThisFrame();
 
         m_JumpPressed = m_PlayerInput.actions["Jump"].WasPressedThisFrame();
